@@ -1,0 +1,8 @@
+18/01/27 20:55:54 WARN TextSocketSourceProvider: The socket source should not be used for production applications! It does not support recovery.
+Exception in thread "main" java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO$Windows.createFileWithMode0(Ljava/lang/String;JJJI)Ljava/io/FileDescriptor;
+	at org.apache.hadoop.io.nativeio.NativeIO$Windows.createFileWithMode0(Native Method)
+	at org.apache.hadoop.io.nativeio.NativeIO$Windows.createFileOutputStreamWithMode(NativeIO.java:556)
+	at org.apache.hadoop.fs.RawLocalFileSystem$LocalFSFileOutputStream.<init>(RawLocalFileSystem.java:231)
+	at org.apache.hadoop.fs.RawLocalFileSystem$LocalFSFileOutputStream.<init>(RawLocalFileSystem.java:221)
+	at org.apache.hadoop.fs.RawLocalFileSystem.createOutputStreamWithMode(RawLocalFileSystem.java:319)
+	at org.apache.hadoop.fs.RawLocalFileSystem.create(RawLocalFileSystem.java:307)
