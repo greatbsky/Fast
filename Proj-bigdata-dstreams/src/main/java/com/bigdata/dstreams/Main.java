@@ -11,6 +11,7 @@ import org.apache.spark.sql.streaming.StreamingQuery;
 import org.apache.spark.sql.streaming.StreamingQueryException;
 
 import com.bigdata.base.spark.SparkUtil;
+import com.bigdata.dstreams.test.WordCountStream;
 
 public class Main {
 
@@ -23,20 +24,7 @@ public class Main {
 //	    int port = Integer.parseInt(args[1]);
 		
 		SparkSession spark = SparkUtil.createSession("spark://172.17.0.9:7077", "JavaWordCount");
-		Dataset<Row> lines = spark.readStream().format("socket").option("host", "192.168.1.167").option("port", 9999).load();
-
-		// 将 lines 切分成 words
-		Dataset<String> words = lines.as(Encoders.STRING()).flatMap(
-				(FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(), Encoders.STRING()
-				);
-
-		// 生成正在运行着的 word count
-		Dataset<Row> wordCounts = words.groupBy("value").count();
-		
-		// Start running the query that prints the running counts to the console
-	    StreamingQuery query = wordCounts.writeStream()
-	    		.outputMode("complete")
-	    		.format("console").start();
+		StreamingQuery query = WordCountStream.start(spark);
 
 //	    StreamingQuery query = wordCounts.writeStream()
 //	    		.outputMode("append")
