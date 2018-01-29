@@ -26,7 +26,8 @@ public class Main {
 
 		SparkSession spark = SparkUtil.createSession("spark://172.17.0.9:7077", "JavaWordCount");
 
-		JavaRDD<String> lines = spark.read().textFile("E:/MyWork2/Genius-core/Spark/pom.xml").javaRDD();
+//		JavaRDD<String> lines = spark.read().textFile("E:/MyWork2/Genius-core/Spark/pom.xml").javaRDD();
+		JavaRDD<String> lines = spark.read().textFile("/Data/MyWork8/BigData/Proj-bigdata-wordcount/pom.xml").javaRDD();
 
 		JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
 			@Override

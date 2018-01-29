@@ -21,7 +21,7 @@ public class SparkUtil {
 	 */
 	public static SparkSession createSession(String uri, String appName) {
 		String os = System.getProperty("os.name");
-		if(os.toLowerCase().startsWith("windows")) {
+		if(os.toLowerCase().startsWith("windows") || os.toLowerCase().startsWith("mac")) {
 			return SparkSession.builder().master("local[3]").appName(appName).getOrCreate();
 		} else {
 			return SparkSession.builder().master(uri).appName(appName).getOrCreate();
@@ -37,7 +37,7 @@ public class SparkUtil {
 	 */
 	public static JavaStreamingContext createStreamingContext(String uri, String appName, int seconds) {
 		SparkConf conf = new SparkConf().setMaster(uri).setAppName(appName);
-		if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+		if(System.getProperty("os.name").toLowerCase().startsWith("windows") || System.getProperty("os.name").toLowerCase().startsWith("mac")) {
 			conf = new SparkConf().setMaster("local[3]").setAppName(appName); //n > 运行接收器的数量
 		}
 

@@ -21,6 +21,7 @@ public class Main {
 //		}
 //		String host = args[0];
 //	    int port = Integer.parseInt(args[1]);
+		
 		SparkSession spark = SparkUtil.createSession("spark://172.17.0.9:7077", "JavaWordCount");
 		Dataset<Row> lines = spark.readStream().format("socket").option("host", "192.168.1.167").option("port", 9999).load();
 
@@ -33,24 +34,26 @@ public class Main {
 		Dataset<Row> wordCounts = words.groupBy("value").count();
 		
 		// Start running the query that prints the running counts to the console
-//	    StreamingQuery query = wordCounts.writeStream()
-//	    		.outputMode("complete")
-//	    		  .format("console").start();
+	    StreamingQuery query = wordCounts.writeStream()
+	    		.outputMode("complete")
+	    		.format("console").start();
 
 //	    StreamingQuery query = wordCounts.writeStream()
 //	    		.outputMode("append")
 ////	    		  .option("checkpointLocation", "path/to/HDFS/dir")
 //	    		.option("path", "dir")
 //	    		.format("parquet").start();
-//	    query.awaitTermination();
 		
-		StreamingQuery query = wordCounts.writeStream()
-				  .outputMode("complete")
-//				  .option("checkpointLocation", "path/to/HDFS/dir")
-				  .format("memory")
-				  .queryName("myqn")
-				  .start();
+//		StreamingQuery query = wordCounts.writeStream()
+//				  .outputMode("complete")
+////				  .option("checkpointLocation", "path/to/HDFS/dir")
+//				  .format("memory")
+//				  .queryName("myqn")
+//				  .start();
+	    
 		System.out.println(query.id());
+
+	    query.awaitTermination();
 	}
 
 }
