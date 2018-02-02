@@ -30,13 +30,8 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mongodb.spark</groupId>
-			<artifactId>mongo-spark-connector_2.11</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-		<dependency>
 			<groupId>${genius-deps-groupId}</groupId>
-			<artifactId>genius-deps-corespark</artifactId>
+			<artifactId>genius-deps-spark</artifactId>
 			<version>${genius-deps-version}</version>
 			<type>pom</type>
 			<scope>provided</scope>
@@ -136,42 +131,6 @@
 						<phase>package</phase>
 						<goals>
 							<!-- <goal>javadoc</goal> -->
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-dependency-plugin</artifactId> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>copy</id> -->
-			<!-- <phase>package</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>copy-dependencies</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <outputDirectory> -->
-			<!-- ${project.build.directory}/lib -->
-			<!-- </outputDirectory> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>${maven-assembly-plugin-version}</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>makejar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>

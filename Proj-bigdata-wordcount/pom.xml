@@ -31,7 +31,13 @@
 		</dependency>
 		<dependency>
 			<groupId>${genius-deps-groupId}</groupId>
-			<artifactId>genius-deps-corespark</artifactId>
+			<artifactId>genius-deps-sparkmore</artifactId>
+			<version>${genius-deps-version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>${genius-deps-groupId}</groupId>
+			<artifactId>genius-deps-spark</artifactId>
 			<version>${genius-deps-version}</version>
 			<type>pom</type>
 			<scope>provided</scope>
