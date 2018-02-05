@@ -1,4 +1,4 @@
-package com.bigdata.base.spark;
+package com.bigdata.base.spark.writers;
 
 import org.apache.spark.sql.ForeachWriter;
 

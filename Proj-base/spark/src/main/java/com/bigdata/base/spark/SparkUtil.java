@@ -8,6 +8,8 @@ import org.apache.spark.sql.streaming.StreamingQuery;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
+import com.bigdata.base.spark.writers.ConsoleWriter;
+
 /**
  * spark util
  * 
@@ -29,8 +31,39 @@ public class SparkUtil {
 		if (os.toLowerCase().startsWith("windows") || os.toLowerCase().startsWith("mac")) {
 			return SparkSession.builder().master("local[3]").appName(appName).getOrCreate();
 		} else {
-			return SparkSession.builder().master(uri).appName(appName).getOrCreate();
+			SparkConf conf = new SparkConf().setMaster(uri).setAppName(appName);
+			return createSession(conf);
 		}
+	}
+
+	/**
+	 * 创建操作mongo的sparksession
+	 * @param uri
+	 * @param appName
+	 * @param mongoInputUri
+	 * @param mongoOutputUri
+	 * @return
+	 */
+	public static SparkSession createSession(String uri, String appName, String mongoInputUri, String mongoOutputUri) {
+		SparkConf conf = new SparkConf();
+		String os = System.getProperty("os.name");
+		if (os.toLowerCase().startsWith("windows") || os.toLowerCase().startsWith("mac")) {
+			conf = conf.setMaster("local[3]").setAppName(appName);
+		} else {
+			conf = conf.setMaster(uri).setAppName(appName);
+		}
+		return createSession(conf
+				.set("spark.mongodb.input.uri", mongoInputUri)
+				.set("spark.mongodb.output.uri", mongoOutputUri));
+	}
+
+	/**
+	 * 通过sparkconf创建sparksession
+	 * @param conf
+	 * @return
+	 */
+	public static SparkSession createSession(SparkConf conf) {
+		return SparkSession.builder().config(conf).getOrCreate();
 	}
 
 	/**
@@ -48,6 +81,27 @@ public class SparkUtil {
 			conf = new SparkConf().setMaster("local[3]").setAppName(appName); // n > 运行接收器的数量
 		}
 
+		return createStreamingContext(conf, seconds);
+	}
+
+	public static JavaStreamingContext createStreamingContext(String uri, String appName, int seconds, String mongoInputUri, String mongoOutputUri) {
+		SparkConf conf = new SparkConf().setMaster(uri).setAppName(appName); //setIfMissing("spark.master", "local[*]")
+		if (System.getProperty("os.name").toLowerCase().startsWith("windows")
+				|| System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+			conf = new SparkConf().setMaster("local[3]").setAppName(appName); // n > 运行接收器的数量
+		}
+		conf = conf.set("spark.mongodb.input.uri", mongoInputUri).set("spark.mongodb.output.uri", mongoOutputUri);
+
+		return createStreamingContext(conf, seconds);
+	}
+	
+	/**
+	 * 通过sparkconf创建streamingcontext
+	 * @param conf
+	 * @param seconds
+	 * @return
+	 */
+	public static JavaStreamingContext createStreamingContext(SparkConf conf, int seconds) {
 		return new JavaStreamingContext(conf, Durations.seconds(seconds));
 	}
 

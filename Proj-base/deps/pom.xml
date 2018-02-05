@@ -17,6 +17,7 @@
 		<module>Tika</module>
 		<module>Solr</module>
 		<module>Spark</module>
+		<module>SparkMore</module>
 		<module>Test</module>
 		<module>Utils</module>
 		<module>Servlet</module>
@@ -31,7 +32,6 @@
 		<module>CoreLucene</module>
 		<module>CoreFileParser</module>
 		<module>CoreSearch</module>
-		<module>CoreSpark</module>
 		<module>CoreAnalyzer</module>
 		<module>Model</module>
 		<module>ModelBase</module>
