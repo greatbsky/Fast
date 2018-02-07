@@ -24,6 +24,7 @@
         <li><a href="/request/ip">IP来源</a></li>
         <li><a href="/request/time">请求时间</a></li>
         <li><a href="/request/hot">请求热度</a></li>
+        <li><a href="/request/user">用户操作</a></li>
        </ul></li>
       <li id="nav-exception" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">异常监控<b class="caret"></b></a>
        <ul class="dropdown-menu">
