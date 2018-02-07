@@ -2,12 +2,13 @@ package com.bigdata.base.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -255,20 +256,28 @@ public class StrUtil {
 	/**
 	 * base64编码
 	 */
+	public static String base64Enc(String text) {
+		return Base64.getEncoder().encodeToString( text.getBytes( StandardCharsets.UTF_8 ) );
+	}
+	
+	/**
+	 * base64编码
+	 */
 	public static String base64Enc(byte[] binaryData) {
-		return Base64.encodeBase64String(binaryData);
+		return org.apache.commons.codec.binary.Base64.encodeBase64String(binaryData);
 	}
 
 	/**
 	 * base64解码
 	 */
 	public static String base64Dec(String base64String) {
-		try {
-			return new String(Base64.decodeBase64(base64String), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return new String(Base64.getDecoder().decode(base64String), StandardCharsets.UTF_8);
+//		try {
+//			return new String(Base64.decodeBase64(base64String), "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
 	}
 
 	/**
