@@ -2,7 +2,7 @@ package routers
 
 import (
 	"../base"
-	"../dao"
+	"../so"
 	"github.com/astaxie/beego"
 )
 
@@ -11,7 +11,7 @@ type RequestRouter struct {
 }
 
 func (this *RequestRouter) IpStats() {
-	this.Data["data"] = dao.GetIPStats()
+	this.Data["data"] = so.GetIPStats()
 	this.Show("request/ip.tpl")
 }
 
