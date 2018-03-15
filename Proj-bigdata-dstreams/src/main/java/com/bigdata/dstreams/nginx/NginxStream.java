@@ -35,7 +35,7 @@ public class NginxStream {
 				.map((MapFunction<Row, String>) row -> String.valueOf(row.get(1)), Encoders.STRING())
 				.filter((FilterFunction<String>) value -> (value != null && value.length() > 0
 						&& RegexUtil.isJson(value)));
-		StreamingQuery query = dataset.writeStream().option("checkpointLocation", checkpointLocation)
+		StreamingQuery query = dataset.writeStream().option("checkpointLocation", checkpointLocation + DateUtil.getDate())
 				.outputMode("append").foreach(new MongoWriter<String>(mongoOutputUri, true) {
 					@Override
 					public void process(String json) {
@@ -76,7 +76,7 @@ public class NginxStream {
 				.filter((FilterFunction<NginxLog>) value -> (value != null)) // && value.getStatus() != null && value.getStatus() == 200
 				.groupBy("remoteAddr").count().selectExpr("remoteAddr as key", "count as value");
 		
-		StreamingQuery query = counts.writeStream().option("checkpointLocation", checkpointLocation)
+		StreamingQuery query = counts.writeStream().option("checkpointLocation", checkpointLocation + DateUtil.getDate())
 				.outputMode("update").foreach(new MongoWriter<Row>(mongoOutputUri) {
 					@Override
 					public void process(Row item) {
